@@ -1,11 +1,22 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SunIcon, MoonIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import { useLocation } from './LocationContext';
-const LocationSelector = dynamic(() => import('./LocationSelector'), { ssr: false });
+
+// Dynamically import client-side components with SSR disabled
+const LocationSelector = dynamic(() => import('./LocationSelector'), { 
+  ssr: false,
+  loading: () => (
+    <select className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+      <option>Loading locations...</option>
+    </select>
+  )
+});
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,23 +26,30 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const { selectedLocation, setSelectedLocation } = useLocation();
 
-  // Fix hydration mismatch for theme
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    // Set initial scroll state
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Set mounted state after component mounts
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Don't render anything on the server to prevent hydration mismatches
+  if (!mounted) {
+    return (
+      <nav className="fixed top-0 left-0 right-0 z-50 h-20 bg-white dark:bg-gray-900" />
+    );
+  }
 
   return (
     <nav
@@ -92,13 +110,11 @@ export default function Navbar() {
               className="p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-accent-100 dark:hover:bg-accent-900/30 transition-all duration-300"
               aria-label="Toggle theme"
             >
-              {!mounted ? (
-                <div className="h-6 w-6" />
-              ) : theme === 'dark' ? (
-                <SunIcon className="h-6 w-6" />
-              ) : (
-                <MoonIcon className="h-6 w-6" />
-              )}
+              {theme === 'dark' ? (
+              <SunIcon className="h-6 w-6" />
+            ) : (
+              <MoonIcon className="h-6 w-6" />
+            )}
             </button>
           </div>
 
@@ -109,13 +125,11 @@ export default function Navbar() {
               className="p-2 rounded-xl text-gray-700 dark:text-gray-300 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-accent-100 dark:hover:bg-accent-900/30 transition-all duration-300"
               aria-label="Toggle theme"
             >
-              {!mounted ? (
-                <div className="h-6 w-6" />
-              ) : theme === 'dark' ? (
-                <SunIcon className="h-6 w-6" />
-              ) : (
-                <MoonIcon className="h-6 w-6" />
-              )}
+              {theme === 'dark' ? (
+              <SunIcon className="h-6 w-6" />
+            ) : (
+              <MoonIcon className="h-6 w-6" />
+            )}
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -132,15 +146,15 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ 
-            opacity: isMobileMenuOpen ? 1 : 0, 
-            height: isMobileMenuOpen ? 'auto' : 0 
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-accent-200/30 dark:border-accent-700/30 shadow-2xl"
-        >
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-accent-200/30 dark:border-accent-700/30 shadow-2xl"
+            >
           <div className="px-4 pt-4 pb-6 space-y-4">
             <div className="mb-4">
               <LocationSelector value={selectedLocation} onChange={setSelectedLocation} />
@@ -166,8 +180,10 @@ export default function Navbar() {
             >
               Contact
             </Link>
-          </div>
-        </motion.div>
+            </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
