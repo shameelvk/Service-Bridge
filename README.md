@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Service Bridge Malappuram
+
+A complete full-stack web application connecting users with trusted service providers in Malappuram. Built with Next.js, Tailwind CSS, and MongoDB.
+
+## Features
+
+### User Side
+- Browse services by categories and subcategories
+- View detailed service information and pricing
+- Book services with a simple form
+- Responsive design with dark/light mode toggle
+- SEO-optimized pages with dynamic meta tags
+
+### Admin Side
+- Secure admin login with JWT authentication
+- Dashboard with booking management
+- Category and subcategory management
+- Service provider management
+- Real-time booking notifications
+
+## Tech Stack
+
+- **Frontend**: Next.js (Pages Router), Tailwind CSS, Heroicons
+- **Backend**: Next.js API Routes, MongoDB, Mongoose
+- **Authentication**: JWT with HTTP-only cookies
+- **Styling**: Tailwind CSS with dark mode support
+- **Theme**: next-themes for theme switching
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+ 
+- MongoDB (local or cloud)
 
+### Installation
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up environment variables:
+Create a `.env.local` file in the root directory:
+```env
+MONGODB_URI=mongodb://localhost:27017/service-bridge-malappuram
+JWT_SECRET=your-secret-key-change-in-production
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Seed the database:
+```bash
+# Start the development server first
+npm run dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Then in another terminal, seed the database
+curl -X POST http://localhost:3000/api/seed
+```
 
-## Learn More
+4. Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-To learn more about Next.js, take a look at the following resources:
+### Default Admin Credentials
+- Username: `admin`
+- Password: `admin123`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── components/          # Reusable UI components
+├── lib/                # Utility libraries (MongoDB, auth)
+├── models/             # Mongoose schemas
+├── pages/              # Next.js pages and API routes
+│   ├── api/           # Backend API endpoints
+│   ├── admin/         # Admin pages
+│   └── services/      # Dynamic service pages
+├── styles/            # Global CSS
+└── utils/             # Helper functions
+```
 
-## Deploy on Vercel
+## API Endpoints
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Public
+- `GET /api/categories` - Get all categories
+- `GET /api/subcategories` - Get all subcategories
+- `POST /api/bookings` - Create new booking
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Admin (Protected)
+- `POST /api/admin/login` - Admin login
+- `POST /api/admin/logout` - Admin logout
+- `GET /api/admin/check-auth` - Check authentication
+- `PUT /api/bookings` - Update booking status
+- CRUD operations for categories, subcategories, and providers
+
+## Database Schema
+
+### Collections
+- **categories**: Service categories
+- **subcategories**: Individual services with rates and details
+- **bookings**: User service bookings
+- **providers**: Service provider information
+- **admin**: Admin user credentials
+
+## Development
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
+
+## Deployment
+
+The application is ready for deployment on platforms like Vercel, Netlify, or any Node.js hosting service. Make sure to:
+
+1. Set up environment variables in your deployment platform
+2. Connect to a MongoDB database (MongoDB Atlas recommended)
+3. Update the JWT secret for production
+
+## License
+
+This project is built for Service Bridge Malappuram.
