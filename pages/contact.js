@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 
 export default function Contact() {
   return (
-    <Layout 
-      title="Contact Service Bridge Malappuram" 
+    <Layout
+      title="Contact Service Bridge Malappuram"
       description="Get in touch with our team for support and inquiries about our services in Malappuram"
     >
       {/* Hero Section */}
@@ -33,7 +33,7 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-xl max-w-3xl mx-auto"
             >
-              We're here to help you connect with trusted service providers
+              We&apos;re here to help you connect with trusted service providers
             </motion.p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function Contact() {
               Reach out to us through any of these channels
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Phone */}
             <motion.div
@@ -78,7 +78,7 @@ export default function Contact() {
                 Available 24/7 for your service needs
               </p>
             </motion.div>
-            
+
             {/* Email */}
             <motion.div
               whileHover={{ scale: 1.05, y: -5 }}
@@ -97,7 +97,7 @@ export default function Contact() {
                 support@servicebridge.in
               </a>
               <p className="text-gray-600 dark:text-gray-400 mt-4">
-                Send us an email and we'll respond within 24 hours
+                Send us an email and we&apos;ll respond within 24 hours
               </p>
             </motion.div>
             
@@ -134,9 +134,9 @@ export default function Contact() {
             <div className="relative z-10">
               <h2 className="text-4xl font-bold mb-6">Need Help Finding a Service?</h2>
               <p className="text-xl mb-8 opacity-90">
-                Can't find what you're looking for? Our team is here to help you connect with the right service providers.
+                Can&apos;t find what you&apos;re looking for? Our team is here to help you connect with the right service providers.
               </p>
-              <a 
+              <a
                 href="tel:+919876543210"
                 className="inline-block px-10 py-4 bg-white text-accent-600 font-bold rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-lg"
               >
@@ -161,10 +161,10 @@ export default function Contact() {
                 Send us a Message
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300">
-                Have questions or feedback? We'd love to hear from you.
+                Have questions or feedback? We&apos;d love to hear from you.
               </p>
             </div>
-            
+
             <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -232,10 +232,10 @@ function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {submitSuccess && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-          <p>Thank you for your message! We'll get back to you soon.</p>
+          <p>Thank you for your message! We&apos;ll get back to you soon.</p>
         </div>
       )}
-      
+
       {submitError && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
           <p>{submitError}</p>
@@ -294,7 +294,7 @@ function ContactForm() {
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Message *
-          </label>
+        </label>
         <textarea
           id="message"
           name="message"

@@ -24,7 +24,7 @@ export default function AdminLogin() {
       }
     };
     checkAuth();
-  }, []);
+  }, [router]);
 
   const handleChange = (e) => {
     setFormData({

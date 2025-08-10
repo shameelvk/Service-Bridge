@@ -56,14 +56,14 @@ export default function About() {
                 Our Mission
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                At Service Bridge Malappuram, we're dedicated to bridging the gap between 
+                At Service Bridge Malappuram, we&apos;re dedicated to bridging the gap between 
                 service seekers and providers in the Malappuram district and surrounding areas. 
                 Our mission is to make professional services accessible, reliable, and affordable 
                 for everyone in the community.
               </p>
               <p className="text-lg text-gray-600 dark:text-gray-300">
                 We believe in empowering local service providers while ensuring quality service 
-                delivery to our customers. Through our platform, we're building a stronger, 
+                delivery to our customers. Through our platform, we&apos;re building a stronger, 
                 more connected community where trust and professionalism go hand in hand.
               </p>
             </motion.div>
@@ -110,7 +110,7 @@ export default function About() {
               Why Choose Us?
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              We've designed our platform to provide the best experience for both service seekers and providers
+              We&apos;ve designed our platform to provide the best experience for both service seekers and providers
             </p>
           </div>
           

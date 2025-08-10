@@ -29,7 +29,7 @@ export default function BookingSuccess({ booking, onClose }) {
 
           <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg mb-6">
             <p className="text-sm text-yellow-800 dark:text-yellow-200">
-              <strong>What's next?</strong><br />
+              <strong>What&apos;s next?</strong><br />
               Our admin team will contact you within 2-4 hours to confirm the booking and provide further details.
             </p>
           </div>

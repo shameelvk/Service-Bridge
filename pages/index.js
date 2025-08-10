@@ -99,7 +99,7 @@ export default function Home() {
           </div>
           <p className="text-xl text-gray-700 dark:text-gray-200 max-w-3xl mx-auto mb-6 animate-fade-in">
             Your trusted platform connecting you with reliable service providers in {selectedLocation ? selectedLocation.name : 'Malappuram'}. 
-            From home repairs to cleaning services, we've got you covered.
+            From home repairs to cleaning services, we&apos;ve got you covered.
           </p>
         </div>
       </motion.section>
@@ -298,7 +298,7 @@ export default function Home() {
           Need Help Finding a Service?
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mb-6">
-          Can't find what you're looking for? Contact our admin team for assistance.
+          Can&apos;t find what you&apos;re looking for? Contact our admin team for assistance.
         </p>
         <a
           href="tel:+919876543210"

@@ -20,7 +20,7 @@ export default function AdminIndex() {
     };
 
     checkAuth();
-  }, []);
+  }, [router]);
 
   return (
     <div className="flex justify-center items-center min-h-screen">

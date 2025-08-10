@@ -103,7 +103,7 @@ async function deleteCategory(req, res) {
   }
 }
 
-export default function(req, res) {
+export default function CategoriesApi(req, res) {
   if (req.method === 'GET') {
     return handler(req, res);
   }

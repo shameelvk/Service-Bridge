@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Layout from '../../components/Layout';
@@ -13,13 +13,7 @@ export default function ServiceDetails() {
   const [loading, setLoading] = useState(true);
   const [showBookingForm, setShowBookingForm] = useState(false);
 
-  useEffect(() => {
-    if (slug) {
-      fetchSubcategory();
-    }
-  }, [slug]);
-
-  const fetchSubcategory = async () => {
+  const fetchSubcategory = useCallback(async () => {
     try {
       const response = await fetch(`/api/subcategories/${slug}`);
       const data = await response.json();
@@ -44,7 +38,13 @@ export default function ServiceDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [slug, selectedLocation, router]);
+
+  useEffect(() => {
+    if (slug) {
+      fetchSubcategory();
+    }
+  }, [slug, fetchSubcategory]);
 
   if (loading) {
     return (
@@ -68,7 +68,7 @@ export default function ServiceDetails() {
             Service Not Found
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-8">
-            The service you're looking for doesn't exist or has been removed.
+            The service you&apos;re looking for doesn&apos;t exist or has been removed.
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}

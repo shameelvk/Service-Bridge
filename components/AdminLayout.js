@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useTheme } from 'next-themes';
@@ -10,11 +10,7 @@ export default function AdminLayout({ children, title = "Admin Dashboard - Servi
   const router = useRouter();
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/check-auth');
       if (response.ok) {
@@ -28,7 +24,11 @@ export default function AdminLayout({ children, title = "Admin Dashboard - Servi
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   const handleLogout = async () => {
     try {

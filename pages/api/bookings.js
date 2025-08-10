@@ -93,7 +93,7 @@ async function updateBooking(req, res) {
   }
 }
 
-export default function(req, res) {
+export default function BookingsApi(req, res) {
   if (req.method === 'POST' && !req.url.includes('/admin/')) {
     // Allow public booking creation
     return handler(req, res);

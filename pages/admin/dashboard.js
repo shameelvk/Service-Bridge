@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import CategoryManagement from '../../components/CategoryManagement';
@@ -17,30 +17,7 @@ export default function AdminDashboard() {
   const [newBookings, setNewBookings] = useState(0);
   const router = useRouter();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  useEffect(() => {
-    if (activeTab) {
-      fetchData();
-    }
-  }, [activeTab]);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/admin/check-auth');
-      if (!response.ok) {
-        router.push('/admin/login');
-        return;
-      }
-      fetchData();
-    } catch (error) {
-      router.push('/admin/login');
-    }
-  };
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const [bookingsRes, categoriesRes, subcategoriesRes, providersRes, locationsRes] = await Promise.all([
@@ -73,7 +50,30 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  const checkAuth = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/check-auth');
+      if (!response.ok) {
+        router.push('/admin/login');
+        return;
+      }
+      fetchData();
+    } catch (error) {
+      router.push('/admin/login');
+    }
+  }, [router, fetchData]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  useEffect(() => {
+    if (activeTab) {
+      fetchData();
+    }
+  }, [activeTab, fetchData]);
 
   const handleLogout = async () => {
     try {

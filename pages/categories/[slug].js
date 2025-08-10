@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Layout from '../../components/Layout';
@@ -12,13 +12,7 @@ export default function CategoryDetails() {
   const [subcategories, setSubcategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (slug) {
-      fetchCategoryAndSubcategories();
-    }
-  }, [slug, selectedLocation]);
-
-  const fetchCategoryAndSubcategories = async () => {
+  const fetchCategoryAndSubcategories = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -52,7 +46,13 @@ export default function CategoryDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [slug, selectedLocation, router]);
+
+  useEffect(() => {
+    if (slug) {
+      fetchCategoryAndSubcategories();
+    }
+  }, [slug, fetchCategoryAndSubcategories]);
 
   if (!router.isReady) {
     return (

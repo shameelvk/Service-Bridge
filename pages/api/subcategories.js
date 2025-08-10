@@ -136,7 +136,7 @@ async function deleteSubcategory(req, res) {
   }
 }
 
-export default function(req, res) {
+export default function SubcategoriesApi(req, res) {
   if (req.method === 'GET') {
     return handler(req, res);
   }

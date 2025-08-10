@@ -11,25 +11,29 @@ export default function LocationSelector({ onChange, value }) {
       .then(res => res.json())
       .then(data => {
         setLocations(data.locations || []);
-        if (!selected && data.locations.length > 0) {
-          const defaultLoc = data.locations.find(l => l.name === 'Malappuram') || data.locations[0];
-          setSelected(defaultLoc);
-          if (onChange) onChange(defaultLoc);
-        }
       })
       .catch(err => console.error('Failed to fetch locations:', err));
   }, []);
+
+  useEffect(() => {
+    if (!value && locations.length > 0) {
+        const defaultLoc = locations.find(l => l.name === 'Malappuram') || locations[0];
+        setSelected(defaultLoc);
+    }
+  }, [value, locations]);
 
   // Handle external value changes
   useEffect(() => {
     if (value && value._id !== selected?._id) {
       setSelected(value);
     }
-  }, [value]);
+  }, [value, selected]);
 
   useEffect(() => {
-    if (selected && onChange) onChange(selected);
-  }, [selected]);
+    if (selected && onChange) {
+      onChange(selected);
+    }
+  }, [selected, onChange]);
 
   return (
     <div className="w-full max-w-xs mx-auto">

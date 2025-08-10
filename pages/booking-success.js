@@ -32,9 +32,9 @@ export default function BookingSuccess() {
           </h2>
           <ul className="text-left text-accent-800 dark:text-accent-200 space-y-2">
             <li>• Our admin team will review your booking</li>
-            <li>• We'll contact you within 2-4 hours to confirm details</li>
+            <li>• We&apos;ll contact you within 2-4 hours to confirm details</li>
             <li>• A qualified service provider will be assigned</li>
-            <li>• You'll receive updates on your booking status</li>
+            <li>• You&apos;ll receive updates on your booking status</li>
           </ul>
         </div>
 
