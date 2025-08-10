@@ -15,19 +15,23 @@ export default function LocationSelector({ onChange, value }) {
       .catch(err => console.error('Failed to fetch locations:', err));
   }, []);
 
+
   useEffect(() => {
     if (!value && locations.length > 0) {
-        const defaultLoc = locations.find(l => l.name === 'Malappuram') || locations[0];
-        setSelected(defaultLoc);
+      const defaultLoc = locations.find(l => l.name === 'Malappuram') || locations[0];
+      setSelected(defaultLoc);
     }
   }, [value, locations]);
 
   // Handle external value changes
   useEffect(() => {
-    if (value && value._id !== selected?._id) {
-      setSelected(value);
-    }
-  }, [value, selected]);
+    setSelected(prevSelected => {
+      if (value && value._id !== prevSelected?._id) {
+        return value;
+      }
+      return prevSelected;
+    });
+  }, [value]);
 
   useEffect(() => {
     if (selected && onChange) {
@@ -66,8 +70,7 @@ export default function LocationSelector({ onChange, value }) {
                     key={location._id}
                     value={location}
                     className={({ active }) =>
-                      `relative cursor-pointer select-none py-2 pl-10 pr-4 transition ${
-                        active ? 'bg-accent-500 text-gray-900' : 'text-white hover:bg-gray-800'
+                      `relative cursor-pointer select-none py-2 pl-10 pr-4 transition ${active ? 'bg-accent-500 text-gray-900' : 'text-white hover:bg-gray-800'
                       }`
                     }
                   >
